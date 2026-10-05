@@ -1,11 +1,11 @@
 <!DOCTYPE html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>산지직송 주문서</title>
-<meta name="description" content="공주 정안알밤 · 괴산 절임배추 산지에서 바로 보내드려요. 무료배송">
+<title>산지직송 알밤주문하기</title>
+<meta name="description" content="공주 정안알밤 · 알밤 · 깐밤 · 칼집밤 · 무료배송">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://sanjijiksong.github.io/">
-<meta property="og:title" content="산지직송 주문서">
-<meta property="og:description" content="공주 정안알밤 · 괴산 절임배추 산지에서 바로 보내드려요. 무료배송">
+<meta property="og:url" content="https://sanjijiksong.github.io/bam">
+<meta property="og:title" content="산지직송 알밤주문하기">
+<meta property="og:description" content="공주 정안알밤 · 알밤 · 깐밤 · 칼집밤 · 무료배송">
 <meta property="og:image" content="https://sanjijiksong.github.io/og-bam.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -105,9 +105,9 @@ input[type=text],input[type=tel],input[type=date]{width:100%;height:52px;font-si
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-var PRODUCTS = [{"name":"알밤 특 2kg","price":30600,"cat":"밤"},{"name":"알밤 특 4kg","price":53600,"cat":"밤"},{"name":"알밤 대 2kg","price":26800,"cat":"밤"},{"name":"알밤 대 4kg","price":45800,"cat":"밤"},{"name":"칼집밤 2kg","price":29900,"cat":"밤"},{"name":"칼집밤 4kg","price":50700,"cat":"밤"},{"name":"깐밤 특 500g","price":20800,"cat":"밤"},{"name":"깐밤 특 1kg","price":31800,"cat":"밤"},{"name":"깐밤 중 1kg","price":29300,"cat":"밤"},{"name":"조각밤 1kg","price":24700,"cat":"밤"},{"name":"조각밤 2kg","price":43300,"cat":"밤"},{"name":"옥광밤 특 2kg","price":53000,"cat":"밤"},{"name":"옥광밤 대 2kg","price":44100,"cat":"밤"},{"name":"옥광밤 중 2kg","price":30600,"cat":"밤"},{"name":"절임배추 20kg (얼리버드)","price":45000,"cat":"절임배추"}];
-var CATS = [{"name":"밤","icon":"🌰","title":"공주 햇밤","note":"무료배송","needDate":false,"deadline":1,"disc":[],"ask":"","offset":0},{"name":"절임배추","icon":"🥬","title":"괴산 절임배추","note":"무료배송 · 김장 하루 전날 도착","needDate":true,"deadline":6,"disc":[[2,2000],[3,3000],[4,4000],[5,5000],[6,10000],[10,20000],[14,30000]],"ask":"김장하시는 날","offset":1}];
-var ITEM = "";
+var PRODUCTS = [{"name":"알밤 특 2kg","price":30600,"cat":"밤"},{"name":"알밤 특 4kg","price":53600,"cat":"밤"},{"name":"알밤 대 2kg","price":26800,"cat":"밤"},{"name":"알밤 대 4kg","price":45800,"cat":"밤"},{"name":"칼집밤 2kg","price":29900,"cat":"밤"},{"name":"칼집밤 4kg","price":50700,"cat":"밤"},{"name":"깐밤 특 500g","price":20800,"cat":"밤"},{"name":"깐밤 특 1kg","price":31800,"cat":"밤"},{"name":"깐밤 중 1kg","price":29300,"cat":"밤"},{"name":"조각밤 1kg","price":24700,"cat":"밤"},{"name":"조각밤 2kg","price":43300,"cat":"밤"},{"name":"옥광밤 특 2kg","price":53000,"cat":"밤"},{"name":"옥광밤 대 2kg","price":44100,"cat":"밤"},{"name":"옥광밤 중 2kg","price":30600,"cat":"밤"}];
+var CATS = [{"name":"밤","icon":"🌰","title":"공주 햇밤","note":"무료배송","needDate":false,"deadline":1,"disc":[],"ask":"","offset":0}];
+var ITEM = "밤";
 var API = "https://script.google.com/macros/s/AKfycbzj3kOu7xtu_iqP2yZIvgPAqqVncrkevMTSpU5iaKN74zU8OgJVD71fMkgrL6kCxiDK9A/exec";
 var google = { script: { run: (function () {
   var ok = function () {}, fail = function () {}, o = {
