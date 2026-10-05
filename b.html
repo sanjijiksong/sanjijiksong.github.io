@@ -105,8 +105,8 @@ input[type=text],input[type=tel],input[type=date]{width:100%;height:52px;font-si
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-var PRODUCTS = [];
-var CATS = [];
+var PRODUCTS = [{"name":"절임배추 20kg (얼리버드)","price":45000,"cat":"절임배추"}];
+var CATS = [{"name":"절임배추","icon":"🥬","title":"괴산 절임배추","note":"무료배송 · 김장 하루 전날 도착","needDate":true,"deadline":6,"disc":[[2,2000],[3,3000],[4,4000],[5,5000],[6,10000],[10,20000],[14,30000]],"ask":"김장하시는 날","offset":1}];
 var ITEM = "절임배추";
 var API = "https://script.google.com/macros/s/AKfycbzj3kOu7xtu_iqP2yZIvgPAqqVncrkevMTSpU5iaKN74zU8OgJVD71fMkgrL6kCxiDK9A/exec";
 var google = { script: { run: (function () {
@@ -128,9 +128,11 @@ var SOURCES = ["유튜브","틱톡","인스타","아는 분 소개","기타"];
 function won(n){ return n.toLocaleString("ko-KR") + "원"; }
 function catOf(name){ for (var i = 0; i < CATS.length; i++) if (CATS[i].name === name) return CATS[i]; return null; }
 function pad(n){ return (n < 10 ? "0" : "") + n; }
+var BASE_TITLE = document.getElementById("title").textContent;
 function renderHead(){
+  document.getElementById("title").textContent = BASE_TITLE;
   if (CATS.length === 1) {
-    document.getElementById("title").textContent = (CATS[0].icon ? CATS[0].icon + " " : "") + document.getElementById("title").textContent;
+    document.getElementById("title").textContent = (CATS[0].icon ? CATS[0].icon + " " : "") + BASE_TITLE;
     document.getElementById("subtitle").textContent = CATS[0].title + (CATS[0].note ? " · " + CATS[0].note : "");
   } else {
     document.getElementById("subtitle").textContent = CATS.map(function(c){ return (c.icon ? c.icon + " " : "") + c.title; }).join(" · ");
@@ -154,6 +156,7 @@ function renderItems(){
       d.querySelector(".iname").textContent = p.name;
       d.querySelector(".iprice").textContent = won(p.price);
       var bs = d.querySelectorAll("button"), sp = d.querySelector("span");
+      sp.textContent = qty[i] || 0;
       bs[0].onclick = function(){ qty[i] = Math.max(0, (qty[i]||0) - 1); sp.textContent = qty[i]; calc(); };
       bs[1].onclick = function(){ qty[i] = Math.min(50, (qty[i]||0) + 1); sp.textContent = qty[i]; calc(); };
       box.appendChild(d);
@@ -269,9 +272,27 @@ function submitForm(){
       agree: document.getElementById("agree").checked, items: items
     });
 }
+
+function applyCatalog(d) {
+  if (!d || !d.products) return;
+  if (JSON.stringify(d.products) === JSON.stringify(PRODUCTS) && JSON.stringify(d.cats) === JSON.stringify(CATS)) return;
+  var keep = {};
+  PRODUCTS.forEach(function (p, i) { if (qty[i]) keep[p.name] = qty[i]; });
+  PRODUCTS = d.products; CATS = d.cats || []; qty = {};
+  PRODUCTS.forEach(function (p, i) { if (keep[p.name]) qty[i] = keep[p.name]; });
+  renderHead(); renderItems(); calc();
+}
+function loadCatalog(tries) {
+  fetch(API + "?api=catalog&item=" + encodeURIComponent(ITEM))
+    .then(function (r) { return r.json(); })
+    .then(applyCatalog)
+    .catch(function () {
+      if (tries < 3) return setTimeout(function () { loadCatalog(tries + 1); }, 2000);
+      if (!PRODUCTS.length) document.getElementById("items").textContent = "상품을 불러오지 못했어요. 잠시 후 다시 열어 주시거나 전화 주세요.";
+    });
+}
 renderSources();
-fetch(API + "?api=catalog&item=" + encodeURIComponent(ITEM))
-  .then(function (r) { return r.json(); })
-  .then(function (d) { PRODUCTS = d.products || []; CATS = d.cats || []; renderHead(); renderItems(); calc(); })
-  .catch(function () { document.getElementById("items").textContent = "상품을 불러오지 못했어요. 잠시 후 다시 열어 주시거나 전화 주세요."; });
+if (PRODUCTS.length) { renderHead(); renderItems(); calc(); }
+loadCatalog(1);
+
 </script></body></html>
